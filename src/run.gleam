@@ -1,9 +1,19 @@
+import gleam/io
+
 pub fn main(day: Int, part: Int, use_sample: Bool) {
     let folder = "src/day" <> int.to_string(day) |> string.pad_start(2, "0")
 
     let assert Ok(input) = case use_sample {
         True -> simplifile.read(folder <> "/sample.txt")
         False -> simplifile.read(folder <> "/input.txt")
+    }
+
+    io.println("==== Day " <> int.to_string(day) <> " ====")
+    io.println("==== Part " <> int.to_string(part) <> " ====")
+
+    case use_sample {
+        True -> io.println("/!\\ Sample data /!\\")
+        False -> Nil
     }
 
     case part {

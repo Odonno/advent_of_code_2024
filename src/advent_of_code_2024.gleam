@@ -17,16 +17,9 @@ pub fn main() {
   let assert Ok(part) = env.get_int("PART")
   let use_sample = env.get_bool_or("USE_SAMPLE", True)
 
-  io.debug(day)
-  io.debug(part)
-  io.debug(use_sample)
-
   let folder = "src/day" <> int.to_string(day) |> string.pad_start(2, "0")
 
   let assert Ok(exists) = simplifile.is_directory(folder)
-
-  io.debug(folder)
-  io.debug(exists)
 
   let assert Ok(_) = case exists {
     True -> {
