@@ -1,5 +1,38 @@
 import gleam/io
+import gleam/string
+import gleam/int
+import dot_env
+import dot_env/env
+import simplifile
+import run
+import generate
 
 pub fn main() {
-  io.println("Hello from advent_of_code_2024!")
+  dot_env.new()
+    |> dot_env.set_path("./.env")
+    |> dot_env.set_debug(False)
+    |> dot_env.load
+
+  let assert Ok(day) = env.get_int("DAY")
+  let assert Ok(part) = env.get_int("PART")
+  let use_sample = env.get_bool_or("USE_SAMPLE", True)
+
+  io.debug(day)
+  io.debug(part)
+  io.debug(use_sample)
+
+  let folder = "src/day" <> int.to_string(day) |> string.pad_start(2, "0")
+
+  let assert Ok(exists) = simplifile.is_directory(folder)
+
+  io.debug(folder)
+  io.debug(exists)
+
+  let assert Ok(_) = case exists {
+    True -> {
+      run.main(day, part, use_sample)
+      Ok(Nil)
+    }
+    False -> generate.main(folder)
+  }
 }
