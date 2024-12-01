@@ -54,17 +54,44 @@ fn regenerate_run_function() {
         False -> simplifile.read(folder <> \"/input.txt\")
     }
 
+    io.println(\"==== Day \" <> int.to_string(day) <> \" ====\")
+    io.println(\"==== Part \" <> int.to_string(part) <> \" ====\")
+
+    case use_sample {
+        True -> io.println(\"/!\\\\ Sample data /!\\\\\")
+        False -> Nil
+    }
+
+    let before = datetime.now_utc()
+
     case part {
-        1 -> run_part1(day, input)
-        2 -> run_part2(day, input)
+        1 -> run_part1(day, input, use_sample)
+        2 -> run_part2(day, input, use_sample)
         _ -> panic as \"Invalid part number\"
+    }
+
+    let after = datetime.now_utc()
+
+    display_execution_time(before, after)
+}
+
+fn display_execution_time(before, after) {
+    let diff = datetime.difference(before, after)
+
+    let total_seconds = diff |> duration.as_seconds
+    let total_ms = diff |> duration.as_milliseconds
+    
+    case total_seconds {
+        seconds if seconds > 3 -> io.println(\"Took \" <> seconds |> int.to_string <> \" seconds. Really slow...\")
+        seconds if seconds > 0 -> io.println(\"Took \" <> seconds |> int.to_string <> \"s. A bit slow, right?\")
+        _ -> io.println(\"Took \" <> total_ms |> int.to_string <> \"ms\")
     }
 }")
 
     let tree = tree |> append_newline
     let tree = tree |> append_newline
 
-    let tree = tree |> string_tree.append("fn run_part1(day: Int, input: String) {
+    let tree = tree |> string_tree.append("fn run_part1(day: Int, input: String, use_sample: Bool) {
     case day {
 ")
 
@@ -73,7 +100,7 @@ fn regenerate_run_function() {
         let module_name = folder <> "_part1"
 
         tree 
-            |> string_tree.append("        " <> day |> int.to_string <> " -> " <> module_name <> ".main(input)")
+            |> string_tree.append("        " <> day |> int.to_string <> " -> " <> module_name <> ".main(input, use_sample)")
             |> append_newline
     })
 
@@ -84,7 +111,7 @@ fn regenerate_run_function() {
     let tree = tree |> append_newline
     let tree = tree |> append_newline
 
-    let tree = tree |> string_tree.append("fn run_part2(day: Int, input: String) {
+    let tree = tree |> string_tree.append("fn run_part2(day: Int, input: String, use_sample: Bool) {
     case day {
 ")
 
@@ -93,7 +120,7 @@ fn regenerate_run_function() {
         let module_name = folder <> "_part2"
 
         tree 
-            |> string_tree.append("        " <> day |> int.to_string <> " -> " <> module_name <> ".main(input)")
+            |> string_tree.append("        " <> day |> int.to_string <> " -> " <> module_name <> ".main(input, use_sample)")
             |> append_newline
     })
     
@@ -104,7 +131,10 @@ fn regenerate_run_function() {
     let tree = tree |> append_newline
     let tree = tree |> append_newline
 
-    let tree = tree |> string_tree.append("import gleam/int
+    let tree = tree |> string_tree.append("import tempo/datetime
+import tempo/duration
+import gleam/io
+import gleam/int
 import gleam/string
 import simplifile
 ")
@@ -120,8 +150,6 @@ import simplifile
             |> string_tree.append("import " <> part2_module <> " as day" <> day <> "_part2")
             |> append_newline
     })
-
-    io.debug(tree |> string_tree.to_string())
 
     let assert Ok(_) = simplifile.write(file_path, tree |> string_tree.to_string)
 

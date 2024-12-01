@@ -1,4 +1,3 @@
-import gleam/io
 import gleam/string
 import gleam/int
 import dot_env

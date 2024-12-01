@@ -1,7 +1,3 @@
-import tempo/datetime
-import tempo/duration
-import gleam/io
-
 pub fn main(day: Int, part: Int, use_sample: Bool) {
     let folder = "src/day" <> int.to_string(day) |> string.pad_start(2, "0")
 
@@ -28,6 +24,10 @@ pub fn main(day: Int, part: Int, use_sample: Bool) {
 
     let after = datetime.now_utc()
 
+    display_execution_time(before, after)
+}
+
+fn display_execution_time(before, after) {
     let diff = datetime.difference(before, after)
 
     let total_seconds = diff |> duration.as_seconds
@@ -54,6 +54,9 @@ fn run_part2(day: Int, input: String, use_sample: Bool) {
     }
 }
 
+import tempo/datetime
+import tempo/duration
+import gleam/io
 import gleam/int
 import gleam/string
 import simplifile
