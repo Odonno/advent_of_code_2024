@@ -21,8 +21,8 @@ pub fn main(day: Int, part: Int, use_sample: Bool) {
     let before = datetime.now_utc()
 
     case part {
-        1 -> run_part1(day, input)
-        2 -> run_part2(day, input)
+        1 -> run_part1(day, input, use_sample)
+        2 -> run_part2(day, input, use_sample)
         _ -> panic as "Invalid part number"
     }
 
@@ -40,16 +40,16 @@ pub fn main(day: Int, part: Int, use_sample: Bool) {
     }
 }
 
-fn run_part1(day: Int, input: String) {
+fn run_part1(day: Int, input: String, use_sample: Bool) {
     case day {
-        1 -> day01_part1.main(input)
+        1 -> day01_part1.main(input, use_sample)
         _ -> panic as "Invalid day number"
     }
 }
 
-fn run_part2(day: Int, input: String) {
+fn run_part2(day: Int, input: String, use_sample: Bool) {
     case day {
-        1 -> day01_part2.main(input)
+        1 -> day01_part2.main(input, use_sample)
         _ -> panic as "Invalid day number"
     }
 }
