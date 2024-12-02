@@ -30,8 +30,13 @@ pub fn main(day: Int, part: Int, use_sample: Bool) {
 fn display_execution_time(before, after) {
     let diff = datetime.difference(before, after)
 
+    let max_seconds = 28944000 // hack for unkown reason
+
     let total_seconds = diff |> duration.as_seconds
+    let total_seconds = total_seconds % max_seconds
+
     let total_ms = diff |> duration.as_milliseconds
+    let total_ms = total_ms % { max_seconds * 1000 }
     
     case total_seconds {
         seconds if seconds > 3 -> io.println("Took " <> seconds |> int.to_string <> " seconds. Really slow...")
