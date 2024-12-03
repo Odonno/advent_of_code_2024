@@ -49,6 +49,7 @@ fn run_part1(day: Int, input: String, use_sample: Bool) {
     case day {
         1 -> day01_part1.main(input, use_sample)
         2 -> day02_part1.main(input, use_sample)
+        3 -> day03_part1.main(input, use_sample)
         _ -> panic as "Invalid day number"
     }
 }
@@ -57,6 +58,7 @@ fn run_part2(day: Int, input: String, use_sample: Bool) {
     case day {
         1 -> day01_part2.main(input, use_sample)
         2 -> day02_part2.main(input, use_sample)
+        3 -> day03_part2.main(input, use_sample)
         _ -> panic as "Invalid day number"
     }
 }
@@ -71,3 +73,5 @@ import day01/part1 as day01_part1
 import day01/part2 as day01_part2
 import day02/part1 as day02_part1
 import day02/part2 as day02_part2
+import day03/part1 as day03_part1
+import day03/part2 as day03_part2
