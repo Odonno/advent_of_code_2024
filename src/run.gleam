@@ -62,6 +62,9 @@ fn run_part1(day: Int, input: String, use_sample: Bool) {
         13 -> day13_part1.main(input, use_sample)
         14 -> day14_part1.main(input, use_sample)
         15 -> day15_part1.main(input, use_sample)
+        16 -> day16_part1.main(input, use_sample)
+        17 -> day17_part1.main(input, use_sample)
+        18 -> day18_part1.main(input, use_sample)
         _ -> panic as "Invalid day number"
     }
 }
@@ -83,6 +86,9 @@ fn run_part2(day: Int, input: String, use_sample: Bool) {
         13 -> day13_part2.main(input, use_sample)
         14 -> day14_part2.main(input, use_sample)
         15 -> day15_part2.main(input, use_sample)
+        16 -> day16_part2.main(input, use_sample)
+        17 -> day17_part2.main(input, use_sample)
+        18 -> day18_part2.main(input, use_sample)
         _ -> panic as "Invalid day number"
     }
 }
@@ -123,3 +129,9 @@ import day14/part1 as day14_part1
 import day14/part2 as day14_part2
 import day15/part1 as day15_part1
 import day15/part2 as day15_part2
+import day16/part1 as day16_part1
+import day16/part2 as day16_part2
+import day17/part1 as day17_part1
+import day17/part2 as day17_part2
+import day18/part1 as day18_part1
+import day18/part2 as day18_part2
