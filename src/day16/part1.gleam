@@ -26,8 +26,8 @@ pub fn main(input: String, use_sample: Bool) -> Nil {
             let #(a, b) = x
             
             case a.direction != b.direction {
-                True -> 1_001
-                False -> 1
+                True -> common.turn_cost
+                False -> common.forward_cost
             }
         })
         |> list.fold(0, fn(acc, v) { acc + v })
@@ -67,7 +67,7 @@ fn find_shortest_path(
             reconstruct_path(parents, current_path)
         }
         False -> {
-            let neighbors_with_score = get_neighbors(maze, current_path)
+            let neighbors_with_score = common.get_neighbors(maze, current_path)
 
             let #(g_scores, f_scores, parents, next_paths) = neighbors_with_score
                 |> list.fold(#(g_scores, f_scores, parents, []), fn(acc, neighbor_with_score) {
@@ -134,42 +134,4 @@ fn calculate_distance(origin: common.Position, target: common.Position) -> Int {
     let y_distance = int.absolute_value(y1 - y2)
 
     x_distance + y_distance
-}
-
-fn get_neighbors(maze: common.ReeinderMaze, path: common.Path) -> List(#(common.Path, Int)) {
-    let forward_direction_with_score = #(path.direction, 1)
-
-    let turn_directions = case path.direction {
-        common.North | common.South -> [common.West, common.East]
-        common.West | common.East -> [common.North, common.South]
-    }
-    let turn_directions_with_score = turn_directions
-        |> list.map(fn(x) { #(x, 1_001) })
-
-    let directions_with_score = [forward_direction_with_score, ..turn_directions_with_score]
-
-    directions_with_score
-        |> list.flat_map(fn(x) {
-            let #(direction, score) = x
-
-            let next_cell_position = case direction {
-                common.North -> #(path.position.0, path.position.1 - 1)
-                common.South -> #(path.position.0, path.position.1 + 1)
-                common.West -> #(path.position.0 - 1, path.position.1)
-                common.East -> #(path.position.0 + 1, path.position.1)
-            }
-
-            let assert Ok(next_cell) = maze |> dict.get(next_cell_position)
-            
-            case next_cell {
-                common.Empty -> {
-                    let next_path = #(common.Path(    
-                        position: next_cell_position, 
-                        direction: direction,
-                    ), score)
-                    [next_path]
-                }
-                common.Wall -> []
-            }
-        })
 }
