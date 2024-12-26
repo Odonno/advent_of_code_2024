@@ -1,8 +1,6 @@
-import gleam/int
-import gleam/io
+import day09/common
 import gleam/iterator
 import gleam/list
-import day09/common
 
 pub fn main(input: String, use_sample: Bool) -> Nil {
     let disk_files = common.parse(input)
