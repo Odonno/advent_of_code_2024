@@ -1,33 +1,34 @@
+import day05/common
+import gleam/dict
+import gleam/list
 import gleam/order
 import gleam/result
-import gleam/dict
-import day05/common
-import gleam/list
 
 pub fn main(input: String, use_sample: Bool) -> Nil {
-    let #(rules, updates) = common.parse(input)
-    
-    let incorrect_updates = 
-        updates
-        |> list.filter(fn(u) {
-            let is_valid = common.is_valid_update(rules, u)
-            !is_valid
-        })
+  let #(rules, updates) = common.parse(input)
 
-    let updated_updates = incorrect_updates
-        |> list.map(fn(u) {
-            u 
-            |> list.sort(fn(a, b) {
-                let rule_a = rules |> dict.get(a) |> result.unwrap([])
+  let incorrect_updates =
+    updates
+    |> list.filter(fn(u) {
+      let is_valid = common.is_valid_update(rules, u)
+      !is_valid
+    })
 
-                case rule_a |> list.contains(b) {
-                    True -> order.Gt
-                    False -> order.Lt
-                }
-            })
-        })
+  let updated_updates =
+    incorrect_updates
+    |> list.map(fn(u) {
+      u
+      |> list.sort(fn(a, b) {
+        let rule_a = rules |> dict.get(a) |> result.unwrap([])
 
-    let result = common.get_result(updated_updates)
+        case rule_a |> list.contains(b) {
+          True -> order.Gt
+          False -> order.Lt
+        }
+      })
+    })
 
-    common.expect(use_sample, result, 123)
+  let result = common.get_result(updated_updates)
+
+  common.expect(use_sample, result, 123)
 }

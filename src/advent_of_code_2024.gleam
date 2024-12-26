@@ -1,16 +1,16 @@
-import gleam/string
-import gleam/int
 import dot_env
 import dot_env/env
-import simplifile
-import run
 import generate
+import gleam/int
+import gleam/string
+import run
+import simplifile
 
 pub fn main() {
   dot_env.new()
-    |> dot_env.set_path("./.env")
-    |> dot_env.set_debug(False)
-    |> dot_env.load
+  |> dot_env.set_path("./.env")
+  |> dot_env.set_debug(False)
+  |> dot_env.load
 
   let assert Ok(day) = env.get_int("DAY")
   let assert Ok(part) = env.get_int("PART")
